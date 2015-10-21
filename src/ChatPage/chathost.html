@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="favicon.ico">
+	<script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="scripts/config.js"></script>
+    <script type="text/javascript">
+    	var glanceSessionKey = (new Date()).getTime();
+    	
+        function Setup() {
+            // start chat
+            document.getElementById('chatiframe').src = 'chat/BypassLoginForm/chatOrCallback.html?chatUsername='+getParameterByName('chatUsername') + '&glanceSessionKey=' + glanceSessionKey;
+        }
+
+		function sendToChat(message) {
+			$('#chatiframe').contents().find('#inputPanel').val(message);
+            setTimeout(function() { $('#chatiframe').contents().find('#sendButton').click(); }, 500);
+		}
+
+		function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+		$(document).ready(function(){
+			populateMenuOptions($('#LinkList'), glanceLinkOptions, 'startGlanceSession');
+		});
+
+		var globalListIndex = 0;
+		function populateMenuOptions(listElement, options, invocationFunctionName) {
+			$.each(options, function (index, value){
+				// Generate element ID
+				globalListIndex++;
+				var elementId = 'hoverListItem' + globalListIndex;
+
+				// Add item to list
+				listElement.append('<li id="' + elementId + '"><a href="#" alt="' + value.description + '" onclick="' + invocationFunctionName + '(\'' + value.url + '\')">' + value.text + '<span class="linkHoverText">Click to launch</span></a><div class="linkDescription">' + value.description + '</div></li>');
+					console.debug($('#hostLink' + index));
+
+				// Hover in/out
+				$('#' + elementId).hover(function(){
+					// Mouse in
+					$(this).find('.linkHoverText').css('display','inline');
+					$(this).find('.linkDescription').slideDown({
+						duration: 70,
+						queue: false
+					});
+				},function(){
+					// Mouse out
+					$(this).find('.linkHoverText').css('display','none');
+					$(this).find('.linkDescription').slideUp();
+				});
+			});
+		}
+
+		function startGlanceSession(url) {
+			wnd = window.open(url, '_blank', 'location=no,menubar=0,titlebar=0,status=0,toolbar=0,height=800,width=800,top=10,left=10,scrollbars=1,resizable=1');
+
+			sendToChat('Please join me in my Glance cobrowse session');
+
+			var message = {
+					glance_invoke: {
+						func: 'showTerms',
+						args: {
+							sessionKey: glanceSessionKey,
+							name: glanceGuestName,
+							email: glanceGuestEmail,
+							phone: glanceGuestPhone
+						},
+						groupid: glanceGroupId
+					}
+				};
+				
+			setTimeout(function() {
+				console.debug('sending message');
+				console.debug(message);
+				wnd.postMessage(message, glanceScreenDomain);
+				console.debug('message sent');
+			}, 3000);
+		}
+	</script>
+	<title>Web Chat</title>
+	<style type="text/css">
+		body {
+			margin: 0px;
+			padding: 0px;
+			height: 100vh;
+			background-color: #FBCA48;
+            font-family: "Arial","Helvetica", sans-serif;
+            font-size: 10pt;
+		}
+
+		iframe {
+			margin: 0px;
+			padding: 0px;
+			border-width: 0px;
+			border-collapse: collapse;
+			width: 99%;
+			height: 99%;
+		}
+
+		#logobox {
+			height: 39px;
+			background-color: #33AAE1;
+			width: 100%;
+			border-width: 0 0 1px 0;
+			border-color: #DDEDFF;
+			border-style: solid;
+		}
+
+		#logobox > img {
+			position: absolute;
+			left: 50%;
+			margin-left: -63px;
+			margin-top: 2px;
+		}
+
+		#logobox2 {
+			height: 32px;
+			background-color: #BDBFC1;
+			width: 100%;
+			border-width: 0 0 4px 0;
+			border-color: #005C7B;
+			border-style: solid;
+		}
+
+		#logobox2 > div {
+			font-size: 14pt;
+			padding: 6px 0 0 6px;
+		}
+
+		#ButtonContainer {
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 100;
+			width: 260px;
+			margin: 0px;
+			background-color: #D5D9DB;
+			height: 100%;
+		}
+
+		#ButtonContainerContents {
+			margin: 12px;
+		}
+
+		button, input {
+			width: 100%;
+		}
+
+		ul {
+		    list-style-type: none;
+		    padding: 0px;
+		    margin: 0px;
+		}
+
+		li > a {
+			background-color: #33AAE1;
+			color: #FFFFFF;
+			display: block;
+			padding: 3px;
+			margin: 3px 1px 0 1px;
+			border: 1px solid #BDBFC1;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		li > a:visited {
+			color: #FFFFFF;
+		}
+
+		li > a:hover {
+			color: #005C7B;
+		}
+
+		li > div {
+			background-color: #CCDAEA;
+			border-width: 0 1px 1px 1px;
+			border-style: solid;
+			border-color: #BDBFC1;
+			padding: 3px;
+			margin: 0 1px 1px 1px;
+		}
+
+		a, a:visited {
+			color: #6B0014;
+		}
+
+		a:hover {
+			color: #007EA2;
+		}
+
+		.linkDescription {
+			display:none;
+		}
+
+		.linkHoverText {
+			float: right;
+			display:none;
+			color: #005C7B;
+		}
+	</style>
+</head>
+<body onload="Setup()">
+	<iframe id="chatiframe"></iframe>
+	<div id="ButtonContainer">
+		<div id="logobox">
+			<img src="img/logo.png" />
+		</div>
+		<div id="logobox2">
+			<div>Cobrowse with an agent</div>
+		</div>
+		<div id="ButtonContainerContents">
+			<ul id="LinkList"></ul>
+		</div>
+	</div>
+</body>
+</html>

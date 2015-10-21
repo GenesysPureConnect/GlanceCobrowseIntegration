@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Readme</title>
+  </head>
+  <body>
+    <p>
+      In this example, the information necessary to start a chat or create a callback is
+      obtained from an external source, and therefore the default login page is bypassed.
+    </p>
+
+    <p>
+      The following files are different from the default install:<br />
+      <ul>
+        <li>
+          Customizations.js - LoginInfoSourceFactory was changed to return a new subclass of
+                              ui._Internal._DefaultLoginInfoSource.
+                              This subclass, customizations.CustomLoginInfoSource,
+                              appears later in this file, and overrides the methods of its parent class.<br />
+                              Also, a new class, customizations.CustomLifecycleEventsObserver,
+                              was created.  It listens for Notifications that a chat was created, a chat
+                              completed, a callback was created, or an attempt to do any of these operations
+                              has failed.  It is instantiated in CustomLoginInfoSource, but could just
+                              as easily be instantiated elsewhere instead.
+        </li>
+        <li>
+          chatOrCallback.html - This is the default index.html page, renamed.  The content of the file
+          has not been changed at all.
+        </li>
+        <li>
+          index.html - This page contains a simple form into which the user may enter their username, password,
+          telephone number, and callback subject.  It is meant to represent any web page, cookie, database, or
+          other source for the information necessary to create a chat or callback.  For instance, a page displaying
+          information about a particular product could display a "chat with a representative" link that is constructed
+          using cookie data.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>Important:</b> Before using this example, please copy your "config.js" file into this example's
+      "js" directory.
+    </p>
+  </body>
+</html>

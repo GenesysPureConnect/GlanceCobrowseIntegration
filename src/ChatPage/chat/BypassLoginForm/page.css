@@ -1,0 +1,17 @@
+body
+{
+	background-color:#FBCA48;
+	background-image: url('img/WebChatHeader.png');
+	background-repeat:no-repeat;
+	background-position: left top;
+	margin-top:0px;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:0px;
+}
+
+body[dir=rtl]
+{
+	background-image: url('img/WebChatHeader_rtl.png');
+	background-position: right top;
+}

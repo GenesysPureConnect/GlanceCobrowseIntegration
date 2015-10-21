@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Bypass Login Form Example</title>
+    </head>
+    <body>
+      <table border="1">
+        <tr>
+          <td>
+            <form action="chatOrCallback.html" method="GET">
+              <table>
+                <tr>
+                  <td>Name:</td>
+                  <td><input type="text" name="chatUsername"></td>
+                </tr>
+                <tr>
+                  <td>Password (optional):</td>
+                  <td><input type="password" name="chatPassword"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="submit" value="Start Chat"></td>
+                </tr>
+              </table>
+            </form>
+          </td>
+          <td>
+            <form action="chatOrCallback.html" method="GET">
+              <table>
+                <tr>
+                  <td>Name:</td>
+                  <td><input type="text" name="callbackUsername"></td>
+                </tr>
+                <tr>
+                  <td>Password (optional):</td>
+                  <td><input type="password" name="callbackPassword"></td>
+                </tr>
+                <tr>
+                  <td>Telephone:</td>
+                  <td><input type="text" name="callbackTelephone"></td>
+                </tr>
+                <tr>
+                  <td>Subject:</td>
+                  <td><input type="text" name="callbackDescription"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="submit" value="Create Callback"></td>
+                </tr>
+              </table>
+            </td>
+          </form>
+        </tr>
+      </table>
+    </body>
+</html>

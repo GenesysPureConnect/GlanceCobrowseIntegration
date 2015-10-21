@@ -1,0 +1,55 @@
+body
+{
+  color: #000;
+  background-color: #fff
+}
+
+ul > li
+{
+ list-style-type:none;
+}
+
+.linkDisclaimerDiv
+{
+   margin-top: 8px;
+}
+
+td
+{
+   vertical-align:top;
+}
+
+td.time
+{
+   min-width:160px;
+   white-space:nowrap;
+}
+
+[dir=ltr] td.time
+{
+   text-align:right;
+   padding-right:10px;
+}
+
+[dir=rtl] td.time
+{
+   text-align:left;
+   padding-left:10px;
+}
+
+td.name
+{
+   white-space:nowrap;
+}
+
+[dir=ltr] td.name
+{
+   text-align:right;
+   padding-right:10px;
+}
+
+[dir=rtl] td.name
+{
+   text-align:left;
+   padding-left:10px;
+}
