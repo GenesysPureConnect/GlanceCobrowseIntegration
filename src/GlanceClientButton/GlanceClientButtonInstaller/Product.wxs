@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define ProductName = "Glance Client Button" ?>
+<?define Manufacturer = "Interactive Intelligence" ?>
+<?define ProductCode = "79D4CF6C-9485-462A-8A6F-D718177ECB2A" ?>
+<?define UpgradeCode = "11DFB466-ED7D-46EC-90DF-A07C31696772" ?>
+<?define Version = !(bind.FileVersion.ININ.Alliances.GlanceClientButton.dll) ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <!--Directory Structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
+          <Directory Id="IcUserAppsFolder" Name="ICUserApps">
+            <Directory Id="INSTALLFOLDER" Name="Addins" />
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!--Add the Product Features (Shortcuts and Components)-->
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="ARPPRODUCTICON" Value="ininlogo.ico" />
+
+    <WixVariable Id="WixUIBannerBmp" Value="banner.png" />
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.png" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+    <Icon Id="ininlogo.ico" SourceFile="ininlogo.ico"/>
+  </Product>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent" Guid="$(var.ProductCode)">
+        <File Id="ININ.Alliances.GlanceClientButton.dll" Name="ININ.Alliances.GlanceClientButton.dll" Source="$(var.GlanceClientButton.TargetDir)\ININ.Alliances.GlanceClientButton.dll" Vital="yes" KeyPath="yes" DiskId="1"/>
+        <File Id="ININ.Alliances.GlanceClientButton.pdb" Name="ININ.Alliances.GlanceClientButton.pdb" Source="$(var.GlanceClientButton.TargetDir)\ININ.Alliances.GlanceClientButton.pdb" Vital="yes" KeyPath="no" DiskId="1"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
+
+
